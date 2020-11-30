@@ -1,7 +1,7 @@
 from PIL import Image
 from PIL.ImageStat import Stat
-import numpy as np
 from tabulate import tabulate
+import numpy as np
 import os
 import argparse
 
@@ -26,7 +26,7 @@ def getColorLayer(img):
     # Greyscale
     if type(img.getpixel((0, 0))) == int:
         grayscale = np.mean(imgsArray)
-        return grayscale, 0, 0, 0, 0
+        return np.round([grayscale, 0, 0, 0, 0], 2)
 
     # RGB AND RGBA
     elif type(img.getpixel((0, 0))) == tuple:
@@ -65,7 +65,8 @@ def main():
         img = Image.open(path)
         getColorLayer(img)
         table.append(table_row(path, image_name, img))
-    print(tabulate(table,headers=heads))
+
+    print(tabulate(table,headers=heads, tablefmt="fancy_grid"))
 
 
 if __name__ == '__main__':
